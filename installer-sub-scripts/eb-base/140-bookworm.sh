@@ -1,5 +1,5 @@
 # ------------------------------------------------------------------------------
-# BULLSEYE.SH
+# BOOKWORM.SH
 # ------------------------------------------------------------------------------
 set -e
 source $INSTALLER/000-source
@@ -7,7 +7,7 @@ source $INSTALLER/000-source
 # ------------------------------------------------------------------------------
 # ENVIRONMENT
 # ------------------------------------------------------------------------------
-MACH="$TAG-bullseye"
+MACH="$TAG-bookworm"
 cd $MACHINES/$MACH
 
 ROOTFS="/var/lib/lxc/$MACH/rootfs"
@@ -15,7 +15,7 @@ ROOTFS="/var/lib/lxc/$MACH/rootfs"
 # ------------------------------------------------------------------------------
 # INIT
 # ------------------------------------------------------------------------------
-[[ "$DONT_RUN_BULLSEYE" = true ]] && exit
+[[ "$DONT_RUN_BOOKWORM" = true ]] && exit
 
 echo
 echo "-------------------------- $MACH --------------------------"
@@ -24,12 +24,12 @@ echo "-------------------------- $MACH --------------------------"
 # REINSTALL_IF_EXISTS
 # ------------------------------------------------------------------------------
 EXISTS=$(lxc-info -n $MACH | egrep '^State' || true)
-if [[ -n "$EXISTS" ]] && [[ "$REINSTALL_BULLSEYE_IF_EXISTS" != true ]]; then
-    echo BULLSEYE_SKIPPED=true >> $INSTALLER/000-source
+if [[ -n "$EXISTS" ]] && [[ "$REINSTALL_BOOKWORM_IF_EXISTS" != true ]]; then
+    echo BOOKWORM_SKIPPED=true >> $INSTALLER/000-source
 
     echo "Already installed. Skipped..."
     echo
-    echo "Please set REINSTALL_BULLSEYE_IF_EXISTS in $APP_CONFIG"
+    echo "Please set REINSTALL_BOOKWORM_IF_EXISTS in $APP_CONFIG"
     echo "if you want to reinstall this container"
     exit
 fi
@@ -47,7 +47,7 @@ sleep 1
 set -e
 
 # clear LXC templates cache to get the newest one
-rm -rf /var/cache/lxc/download/debian/bullseye/$ARCH/default
+rm -rf /var/cache/lxc/download/debian/bookworm/$ARCH/default
 
 # create the new one
 lxc-create -n $MACH -t download -P /var/lib/lxc/ -- \
@@ -55,7 +55,7 @@ lxc-create -n $MACH -t download -P /var/lib/lxc/ -- \
 
 # shared directories
 mkdir -p $SHARED/cache
-cp -arp $MACHINE_HOST/usr/local/$TAG/cache/bullseye-apt-archives $SHARED/cache/
+cp -arp $MACHINE_HOST/usr/local/$TAG/cache/bookworm-apt-archives $SHARED/cache/
 
 # container config
 rm -rf $ROOTFS/var/cache/apt/archives
@@ -72,7 +72,7 @@ lxc.net.0.link = $BRIDGE
 lxc.net.0.name = eth0
 lxc.net.0.flags = up
 
-lxc.mount.entry = $SHARED/cache/bullseye-apt-archives \
+lxc.mount.entry = $SHARED/cache/bookworm-apt-archives \
 var/cache/apt/archives none bind 0 0
 EOF
 
@@ -91,7 +91,7 @@ sleep 1
 # ------------------------------------------------------------------------------
 # ca-certificates for https repo
 apt-get $APT_PROXY \
-    -o dir::cache::archives="/usr/local/$TAG/cache/bullseye-apt-archives/" \
+    -o dir::cache::archives="/usr/local/$TAG/cache/bookworm-apt-archives/" \
     -dy reinstall iputils-ping ca-certificates openssl
 
 lxc-attach -n $MACH -- bash <<EOS
