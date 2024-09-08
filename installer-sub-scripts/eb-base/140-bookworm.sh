@@ -131,6 +131,7 @@ apt-get $APT_PROXY -y install openssh-server openssh-client
 apt-get $APT_PROXY -y install cron logrotate
 apt-get $APT_PROXY -y install dbus libpam-systemd
 apt-get $APT_PROXY -y install wget
+apt-get $APT_PROXY -y install nano
 EOS
 
 # ------------------------------------------------------------------------------
