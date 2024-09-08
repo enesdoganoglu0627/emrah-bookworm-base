@@ -1,5 +1,5 @@
 # ------------------------------------------------------------------------------
-# BULLSEYE_CUSTOM.SH
+# BOOKWORM_CUSTOM.SH
 # ------------------------------------------------------------------------------
 set -e
 source $INSTALLER/000-source
@@ -7,7 +7,7 @@ source $INSTALLER/000-source
 # ------------------------------------------------------------------------------
 # ENVIRONMENT
 # ------------------------------------------------------------------------------
-MACH="$TAG-bullseye"
+MACH="$TAG-bookworm"
 cd $MACHINES/$MACH
 
 ROOTFS="/var/lib/lxc/$MACH/rootfs"
@@ -15,8 +15,8 @@ ROOTFS="/var/lib/lxc/$MACH/rootfs"
 # ------------------------------------------------------------------------------
 # INIT
 # ------------------------------------------------------------------------------
-[[ "$BULLSEYE_SKIPPED" = true ]] && exit
-[[ "$DONT_RUN_BULLSEYE_CUSTOM" = true ]] && exit
+[[ "$BOOKWORM_SKIPPED" = true ]] && exit
+[[ "$DONT_RUN_BOOKWORM_CUSTOM" = true ]] && exit
 
 echo
 echo "---------------------- $MACH CUSTOM -----------------------"
