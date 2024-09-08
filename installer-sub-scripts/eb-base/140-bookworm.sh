@@ -51,7 +51,7 @@ rm -rf /var/cache/lxc/download/debian/bookworm/$ARCH/default
 
 # create the new one
 lxc-create -n $MACH -t download -P /var/lib/lxc/ -- \
-    -d debian -r bullseye -a $ARCH
+    -d debian -r bookworm -a $ARCH
 
 # shared directories
 mkdir -p $SHARED/cache
